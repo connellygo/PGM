@@ -115,7 +115,7 @@ public class Board extends JPanel implements KeyListener{
 			else return;
 			
 		}
-		//if a horizontal wall is being placed
+		//if a horizontal wall is being placed and there is an appropriate place to put a wall.
 		else if(rowDif > 1 && colDif > 0){
 			
 			//List of valid possible columns to place a wall.
@@ -134,7 +134,11 @@ public class Board extends JPanel implements KeyListener{
 				}
 			
 				//Selecting a random cell in previous wall that will be free to add an entry between the rooms.
-				int randCol = r.nextInt(colDif) + tlCol + 1;
+				ArrayList<Integer> possibleColumns = new ArrayList<Integer>();
+				for(int i = tlCol; i <= brCol; i++){
+					possibleColumns.add(i);
+				}
+				int randCol = possibleColumns.get(r.nextInt(possibleColumns.size()));
 				board[randRow][randCol].setType("Free");			
 			
 				//Calling the function again setting a horizontal row 
@@ -146,7 +150,7 @@ public class Board extends JPanel implements KeyListener{
 			//A wall could not be placed horizontally or vertically. This is the base case.
 			else return;
 		}
-		//The algorithm didn't specify whether horizontal or vertical, therefore, return.
+		//The algorithm can't divide the room anymore.
 		else return;
 	}
 
